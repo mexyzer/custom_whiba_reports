@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="partner_ledger_form_view">
+            <field name="name">partner_ledger_form_view</field>
+            <field name="model">partner.ledger</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="ignore_limit"/>
+                        </group>
+                        <group>
+                            <field name="type"/>
+                            <field name="partner_type"/>
+                            <field name="include_unposted_entries"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="PDF" name="export_pdf" type="object"
+                                class="oe_highlight"/>
+                        <button string="Excel" name="export_xlsx" type="object"
+                                class="oe_highlight"/>
+
+
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_partner_ledger" model="ir.actions.act_window">
+            <field name="name">Partner Ledger</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.ledger</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
