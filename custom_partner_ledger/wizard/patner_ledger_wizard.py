@@ -5,7 +5,6 @@ from odoo import models, fields
 import calendar
 from dateutil.relativedelta import relativedelta
 
-
 class PartnerLedger(models.TransientModel):
     _name = "partner.ledger"
     _description = "Partner Ledger"
@@ -106,14 +105,13 @@ class PartnerLedger(models.TransientModel):
                     'description': line_id.ref,
                 })
 
-        if initial_balance:
-            total_line.update({
-                'debit': cumulative_debit,
-                'credit': cumulative_credit,
-                'balance': cumulative_balance
-            })
+        # if initial_balance:
+        total_line.update({
+            'debit': cumulative_debit,
+            'credit': cumulative_credit,
+            'balance': cumulative_balance
+        })
 
-        print(110000, options['date'])
         data = {
             "partner_name": partner_ids[0].name,
             "date": options['date'],

@@ -4,7 +4,7 @@
     <template id="filtered_partner_ledger">
         <t t-call="web.html_container">
             <t t-call="custom_partner_ledger.ledger_layout">
-                <div class="page" style="direction:rtl !important;font-size:12px;">
+                <div class="page" style="direction:rtl !important;font-size:15px;">
                     <div>
                         <div class="row">
                             <div class="col-12 text-center">
@@ -36,9 +36,12 @@
                             </div>
                         </div>
                     </div>
-                    <table style="border:1px solid black;height: 45px; margin-top: 15px;" class="table table-sm o_main_table">
+                    <table style="border:1px solid black;height: 45px; margin-top: 15px; width: 95%; margin-right: 17px;" class="table table-sm o_main_table">
                         <thead style="border:1px solid black">
-                            <tr>
+                            <tr style="background-color: #bfbfbf">
+                                <th style="border:1px solid black">
+                                    <span>#</span>
+                                </th>
                                 <th style="border:1px solid black">
                                     <span>التاريخ</span>
                                 </th>
@@ -60,9 +63,12 @@
                             </tr>
                         </thead>
                         <tbody class="sale_tbody" style="border:1px solid black">
-                            <t t-set="debit" t-value="0"/>
-                            <t t-set="credit" t-value="0"/>
-                            <tr t-foreach="data['lines']" t-as="line_row" style="height: 40px;">
+                            <t t-set="i" t-value="0"/>
+                            <tr t-foreach="data['lines']" t-as="line_row" style="height: 20px;">
+                                <t t-set="i" t-value="i+1"/>
+                                <td class="text-center">
+                                    <span t-esc="i"/>
+                                </td>
                                 <td>
                                     <span t-esc="line_row['date']"/>
                                 </td>
@@ -85,60 +91,34 @@
                         </tbody>
                     </table>
 
-                    <div class="row" style="margin-top: 30px">
-                        <div class="col-6">
-                            <div class="row" style="padding:20px">
-                                <div class="col-2 " style="background-color:grey">
-                                    مدين :
-                                </div>
-                                <div class="col-4 " style="background-color:grey">
-                                    <span t-esc="data['total_line']['debit']"/>
-                                </div>
-                            </div>
-                            <div class="row" style="padding:20px">
-                                <div class="col-2 " style="background-color:grey">
-                                    دائن :
-                                </div>
-                                <div class="col-4 " style="background-color:grey">
-                                    <span t-esc="data['total_line']['credit']"/>
-                                </div>
-                            </div>
-                            <div class="row" style="padding:20px">
-                                <div class="col-2 " style="background-color:grey">
-                                    الرصيد :
-                                </div>
-                                <div class="col-4 " style="background-color:grey">
-                                    <span t-esc="data['total_line']['balance']"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row" style="padding:20px">
-                                <div class="col-2 ">
-                                    تمت المطابقة بواسطة :
-                                </div>
-                                <div class="col-4 ">
-                                    <span>. . . . . . . . . . . . . . . . . . . . .</span>
-                                </div>
-                            </div>
-                            <div class="row" style="padding:20px">
-                                <div class="col-2 ">
-                                    التوقيع :
-                                </div>
-                                <div class="col-4 ">
-                                    <span>. . . . . . . . . . . . . . . . . . . . .</span>
-                                </div>
-                            </div>
-                            <div class="row" style="padding:20px">
-                                <div class="col-2 ">
-                                    الختم :
-                                </div>
-                                <div class="col-4 ">
-                                    <span>. . . . . . . . . . . . . . . . . . . . .</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row" style="margin-top: 50px">
+                        <div class="col-1" style="padding:3px; background-color: #bfbfbf; margin-right: 40px">مدين :</div>
+                        <div class="col-2" style="padding:3px; background-color: #bfbfbf"><span t-esc="data['total_line']['debit']"/></div>
+                        <div class="col-2" />
+                        <div class="col-3" style="padding:3px;">تمت المطابقة بواسطة :</div>
+                        <div class="col-3" style="padding:3px;">. . . . . . . . . . . . . . . . . . . . .</div>
                     </div>
+                    <div class="row" style="margin-top: 15px">
+                        <div class="col-1" style="padding:3px; background-color: #bfbfbf; margin-right: 40px">دائن :</div>
+                        <div class="col-2" style="padding:3px; background-color: #bfbfbf"><span t-esc="data['total_line']['credit']"/></div>
+                        <div class="col-2" />
+                        <div class="col-3" style="padding:3px;">التوقيع :</div>
+                        <div class="col-3" style="padding:3px;">. . . . . . . . . . . . . . . . . . . . .</div>
+                    </div>
+                    <div class="row" style="margin-top: 15px">
+                        <t t-if="data['total_line']['balance'] &lt; 0">
+                            <div class="col-1" style="padding:3px; background-color: #cf7272; margin-right: 40px">الرصيد :</div>
+                            <div class="col-2" style="padding:3px; background-color: #cf7272"><span t-esc="data['total_line']['balance']"/></div>
+                        </t>
+                        <t t-else="">
+                            <div class="col-1" style="padding:3px; background-color: #73cf72; margin-right: 40px">الرصيد :</div>
+                            <div class="col-2" style="padding:3px; background-color: #73cf72"><span t-esc="data['total_line']['balance']"/></div>
+                        </t>
+                        <div class="col-2" />
+                        <div class="col-3" style="padding:3px;">الختم :</div>
+                        <div class="col-3" style="padding:3px;">. . . . . . . . . . . . . . . . . . . . .</div>
+                    </div>
+
 
                 </div>
             </t>
